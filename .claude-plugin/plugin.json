@@ -1,0 +1,49 @@
+{
+  "name": "vibecraft",
+  "version": "0.8.0",
+  "description": "VibeCraft — the ultimate agentic system for vibe coding. Combines project management, workflow orchestration, multi-agent pipelines, code quality, deployment, security, research, UI/UX, memory, self-improvement, compliance, and documentation into one cohesive plugin.",
+  "author": {
+    "name": "Gareth Hood"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garethhood/vibecraft"
+  },
+  "keywords": [
+    "vibe-coding",
+    "agentic",
+    "orchestration",
+    "multi-agent",
+    "subagents",
+    "agent-workflows",
+    "code-quality",
+    "deployment",
+    "security",
+    "research",
+    "ui-ux",
+    "memory",
+    "self-improving",
+    "database",
+    "monitoring",
+    "cicd",
+    "linting",    "ai-agents",
+    "loop",
+    "scheduler",
+    "structured-logging",
+    "learning",
+    "semantic-memory",
+    "webhooks",
+    "daemon-mode",
+    "context-engine",
+    "multi-platform",
+    "project-scaffolding",
+    "monorepo-management",
+    "secrets-management",
+    "compliance",
+    "HIPAA",
+    "SOC2",
+    "vault",
+    "documentation"
+  ]
+}

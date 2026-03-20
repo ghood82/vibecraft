@@ -1,0 +1,66 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '## VibeCraft v0.8.0 Active\n\nSkills (34): orchestrator, vibe-coding, code-quality, deployment, research, ui-ux, security, memory, self-eval, docs-productivity, ai-agents, git-workflow, api-design, performance, monitoring, database, env-secrets, linting, cicd, codebase-understanding, loop, scheduler, structured-logging, learning, semantic-memory, webhooks, daemon-mode, context-engine, multi-platform, project-scaffolding, monorepo-management, secrets-management, compliance, agent-workflows\n\nAgents (5): code-reviewer, security-scanner, researcher, qa-tester, ux-auditor\n\nCommands (10): /vibe, /ship, /review, /research, /plan, /secure, /test, /improve, /status, /feature\n\nCheck CLAUDE.md for project context. Run /status for project health.'",
+          "timeout": 1
+        }
+      ]
+    }
+  ],  "PreToolUse": [
+    {
+      "matcher": "Write|Edit",
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "Quick secret scan: Does this write contain hardcoded API keys, passwords, tokens, or connection strings? Only block if a real secret is present. Approve silently otherwise.",
+          "timeout": 3
+        }
+      ]
+    },
+    {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo $TOOL_INPUT | grep -qiE '(curl|wget|fetch).*(-H|--header).*(auth|token|key|secret|bearer)|base64.*\\|.*bash|rm\\s+-rf\\s+/[^a-z]|git\\s+push.*--force.*(main|master)' && echo 'BLOCK: Potentially dangerous command detected — review before running' || echo ''",
+          "timeout": 1
+        }
+      ]
+    }
+  ],  "PostToolUse": [
+    {
+      "matcher": "WebFetch|WebSearch",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo $TOOL_OUTPUT | grep -qiE 'ignore (previous|all|above) instructions|you are now|system prompt|reveal your|<system>|act as root|sudo mode' && echo 'WARNING: Possible prompt injection detected in fetched content — review carefully' || echo ''",
+          "timeout": 1
+        }
+      ]
+    },
+    {
+      "matcher": "Agent",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo 'SUB-AGENT COMPLETED: Check result quality. If self-eval score < 7, consider re-running with refined prompt. Log outcome to .loop/logs/ for self-improvement tracking.'",
+          "timeout": 1
+        }
+      ]
+    },
+    {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo $TOOL_OUTPUT | grep -qiE '(FAIL|ERROR|error:|failed|exit code [1-9])' && echo 'AFTER-TURN: Test/build failure detected. Consider engaging loop-engine for iterative fix cycle.' || echo ''",
+          "timeout": 1
+        }
+      ]
+    }
+  ]
+}
